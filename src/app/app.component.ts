@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-practice';
+  /**
+   *
+   */
+  constructor() {
+    // super();
+    setTimeout(() => {
+
+      this.title = 'newone'
+    }, 2000);
+  }
 }
