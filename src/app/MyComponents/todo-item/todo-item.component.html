@@ -2,8 +2,20 @@
   <p [ngClass]="{ strike: !todo.active }">{{ todo.title }}</p>
   <p>{{ todo.description }}</p>
   <div class="form-check">
-    <input type="checkbox" [checked]="todo.active" class="form-check-input" name="active" id="active" />
+    <input
+      type="checkbox"
+      [checked]="todo.active"
+      class="form-check-input"
+      name="active"
+      id="active"
+    />
     <label class="form-check-label" for="active">Check me out</label>
+  </div>
+  <div style="border: 1px solid red">
+    <tr *ngFor="let product of products | async">
+      <td>{{ product }}</td>
+      <td>{{ product }}</td>
+    </tr>
   </div>
   <button class="btn btn-danger" (click)="onClick(todo)">Delete</button>
 </div>

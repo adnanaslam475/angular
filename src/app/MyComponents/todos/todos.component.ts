@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TasksService } from 'src/app/services/tasks.service';
 import { Todo } from 'src/app/Todo';
 
 @Component({
@@ -6,36 +7,44 @@ import { Todo } from 'src/app/Todo';
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss']
 })
-export class TodosComponent implements OnInit {
-  todos: Todo[]
 
-  constructor() {
-    this.todos = [
-      //   { sno: 1, title: 'adnan', description: 'aslasamsa', active: false },
-      // { sno: 3, title: 'adnan', description: 'aslasamsa', active: false },
-      // { sno: 3, title: 'adnan', description: 'aslasamsa', active: false }
-    ]
+export class TodosComponent implements OnInit {
+  todos: Todo[] = [];
+
+  constructor(private todoServices: TasksService) {
+
   }
 
   ngOnInit(): void {
-
+    this.todoServices.getTodos().subscribe(todos => {
+      console.log('todos', todos)
+      this.todos = todos
+    });
   }
 
   deleteTodo(todo: Todo) {
-    const i = this.todos.indexOf(todo)
-    this.todos.splice(i, 1)
+    console.log('todo', todo)
+    this.todoServices.deleteTod(todo).subscribe(() => {
+      this.todos = this.todos.filter(v => v.sno !== todo.sno)
+    }, e => { console.log('errrrrrrr', e) });
   }
+
+
 
   checkedTodo(todo: Todo) {
-    const i = this.todos.indexOf(todo)
-    const temp: any = [...this.todos]
-    temp[i] = { ...this.todos[i], active: !this.todos[i].active }
-    console.log('thsis', temp)
-    this.todos = temp
+    this.todoServices.updateTodo(todo).subscribe((t) => {
+      // this.todos = this.todos.filter(v => v.sno !== t.sno)
+    });
   }
 
-  addTodo(todo: Todo) {
-    console.log('totto', todo)
-    this.todos.push(todo)
+  // addTodo(todo: Todo) {
+  //   this.todoServices.addTodo(todo).subscribe(() => {
+  //     this.todos.push(todo)
+  //   });
+  // }
+
+
+  addTask(todo: Todo) {
+    this.todoServices.addTask(todo).subscribe((todo) => this.todos.push(todo));
   }
 }
