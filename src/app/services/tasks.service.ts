@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, EmptyError, catchError } from 'rxjs';
+import { Observable, throwError, } from 'rxjs';
 import { Todo } from '../Todo';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { httpOptions } from '../config/hroes.service';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
-};
 
 @Injectable({
   providedIn: 'root'

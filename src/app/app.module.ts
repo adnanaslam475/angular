@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,12 +10,15 @@ import { TodoItemComponent } from './MyComponents/todo-item/todo-item.component'
 import { AddTodoComponent } from './MyComponents/add-todo/add-todo.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AboutComponent } from './MyComponents/about/about.component';
 import { SignupComponent } from './MyComponents/signup/signup.component';
 import { LoginComponent } from './MyComponents/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { reducer } from './reducers/reducers';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { addProductReducer } from './reducers/product.reducers';
+import { AuthGuard } from './shared/guard/not-auth.guard';
+import { LoggedInAuthGuard } from './shared/guard/auth.guard';
+import { ProductsComponent } from './MyComponents/products/products.component';
 
 export const environment = {
   production: false,
@@ -36,22 +40,23 @@ export const environment = {
     TodosComponent,
     TodoItemComponent,
     AddTodoComponent,
-    AboutComponent,
     SignupComponent,
     LoginComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     HttpClientModule,
+    MatSlideToggleModule,
     FormsModule,
     // StoreModule.forRoot({}),
     StoreModule.forRoot({ product: addProductReducer }),
 
     StoreModule.forFeature('auth', reducer)
   ],
-  providers: [],
+  providers: [AuthGuard, LoggedInAuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

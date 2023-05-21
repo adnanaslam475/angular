@@ -24,22 +24,34 @@
           >Home</a
         >
       </li>
-      <li class="nav-item">
+      <div *ngIf="!a">
+        <li class="nav-item">
+          <a
+            routerLink="/login"
+            class="nav-link"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Login</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            routerLink="/signup"
+            class="nav-link"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            >Sign up</a
+          >
+        </li>
+      </div>
+      <li else class="nav-item">
         <a
-          routerLink="/login"
+          routerLink="/"
           class="nav-link"
+          (click)="logout()"
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
-          >Login</a
-        >
-      </li>
-      <li class="nav-item">
-        <a
-          routerLink="/signup"
-          class="nav-link"
-          routerLinkActive="active"
-          ariaCurrentWhenActive="page"
-          >Sign up</a
+          >Logout</a
         >
       </li>
     </ul>

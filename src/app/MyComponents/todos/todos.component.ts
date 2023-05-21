@@ -10,6 +10,7 @@ import { Todo } from 'src/app/Todo';
 
 export class TodosComponent implements OnInit {
   todos: Todo[] = [];
+  products: any[] = [];
 
   constructor(private todoServices: TasksService) {
 
@@ -30,18 +31,11 @@ export class TodosComponent implements OnInit {
   }
 
 
-
   checkedTodo(todo: Todo) {
     this.todoServices.updateTodo(todo).subscribe((t) => {
       // this.todos = this.todos.filter(v => v.sno !== t.sno)
     });
   }
-
-  // addTodo(todo: Todo) {
-  //   this.todoServices.addTodo(todo).subscribe(() => {
-  //     this.todos.push(todo)
-  //   });
-  // }
 
 
   addTask(todo: Todo) {

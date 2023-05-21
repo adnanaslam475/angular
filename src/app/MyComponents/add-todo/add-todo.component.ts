@@ -18,6 +18,7 @@ export class AddTodoComponent implements OnInit {
   ngOnInit(): void {
 
   }
+  // ngOnDestroy(): void { }
 
   onSubmit() {
     const t = { title: this.title, active: false, description: this.description, sno: 8, }

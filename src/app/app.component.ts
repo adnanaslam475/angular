@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginComponent } from './MyComponents/login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-practice';
-  /**
-   *
-   */
-  constructor() {
-    // super();
-    setTimeout(() => {
+  a: any = this.accountService?.userValue?.token
+  constructor(private accountService: LoginComponent, public router: Router) {
 
-      this.title = 'newone'
-    }, 2000);
+  }
+  ngOnInit() {
+
+  }
+  logout() {
+    this.a = null
+    this.accountService.logout()
   }
 }

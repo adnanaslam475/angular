@@ -1,13 +1,8 @@
 <app-add-todo (todoAdd)="addTask($event)"> </app-add-todo>
 
-<div *ngIf="this.todos.length == 0; else elseBlock">No TODOS to diplay</div>
-<ng-template #elseBlock>
-  <ul *ngFor="let todo of todos">
-    <app-todo-item
-      [todo]="todo"
-      (todoDelete)="deleteTodo($event)"
-      (todoChecked)="checkedTodo($event)"
-    >
-    </app-todo-item>
-  </ul>
+<!-- <div *ngIf="this.todos.length == 0; else elseBlock">No TODOS to diplay</div> -->
+<ng-template>
+  <div *ngFor="let object of products">
+    {{ object.property }}
+  </div>
 </ng-template>
