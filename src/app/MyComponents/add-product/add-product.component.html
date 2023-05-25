@@ -1,0 +1,74 @@
+<div>
+  <form class="example-form">
+    <mat-grid-list cols="2" rowHeight="2:1">
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width"
+          ><mat-label>Title</mat-label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            matInput
+            [(ngModel)]="product.title"
+            #title
+            placeholder="Ex. pat@example.com"
+          />
+          <mat-error
+            *ngIf="
+              emailFormControl.hasError('email') &&
+              !emailFormControl.hasError('required')
+            "
+          >
+            Please enter a valid title
+          </mat-error>
+        </mat-form-field></mat-grid-tile
+      >
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width">
+          <input
+            type="text"
+            id="description"
+            name="description"
+            matInput
+            [(ngModel)]="product.description"
+            #description
+            placeholder="Enter desciption"
+          />
+          <mat-error
+            *ngIf="
+              emailFormControl.hasError('description') &&
+              !emailFormControl.hasError('required')
+            "
+          >
+            Please enter a valid description
+          </mat-error></mat-form-field
+        ></mat-grid-tile
+      >
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width"
+          ><input
+            type="number"
+            id="price"
+            name="price"
+            matInput
+            [(ngModel)]="product.price"
+            #price
+            placeholder="Ex. pat@example.com"
+          />
+          <mat-error
+            *ngIf="
+              emailFormControl.hasError('price') &&
+              !emailFormControl.hasError('required')
+            "
+          >
+            Please enter a valid price
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <input (change)="imageUpload($event)" multiple type="file" />
+    <mat-grid-tile *ngFor="let v of product.images">
+      <img src="{{ v }}" class="" alt="" />
+    </mat-grid-tile>
+  </form>
+</div>

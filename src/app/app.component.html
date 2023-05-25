@@ -44,7 +44,14 @@
           >
         </li>
       </div>
-      <li else class="nav-item">
+      <div else class="nav-item d-flex">
+        <a
+          routerLink="/add-product"
+          class="nav-link"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          >Add Product</a
+        >
         <a
           routerLink="/"
           class="nav-link"
@@ -53,7 +60,7 @@
           ariaCurrentWhenActive="page"
           >Logout</a
         >
-      </li>
+      </div>
     </ul>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
@@ -15,11 +15,22 @@ import { LoginComponent } from './MyComponents/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { reducer } from './reducers/reducers';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule, } from '@angular/material/button-toggle';
 import { addProductReducer } from './reducers/product.reducers';
 import { AuthGuard } from './shared/guard/not-auth.guard';
 import { LoggedInAuthGuard } from './shared/guard/auth.guard';
 import { ProductsComponent } from './MyComponents/products/products.component';
-
+import { AddProductComponent } from './MyComponents/add-product/add-product.component';
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask,
+} from "@angular/fire/compat/storage";
+import { getStorage, provideStorage, Storage, StorageModule } from '@angular/fire/storage';
+import { ErrorStateMatcher, MatLine, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 export const environment = {
   production: false,
   firebase: {
@@ -33,7 +44,6 @@ export const environment = {
     measurementId: "G-9BTSLHLNHG",
   }
 };
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,20 +53,25 @@ export const environment = {
     SignupComponent,
     LoginComponent,
     ProductsComponent,
+    AddProductComponent,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase, "cloud"),
     AppRoutingModule,
     HttpClientModule,
-    MatSlideToggleModule,
+    MatSlideToggleModule, AngularFireStorageModule,
+    MatInputModule, MatButtonModule,
+    MatButtonToggleModule,
     FormsModule,
-    // StoreModule.forRoot({}),
+    BrowserAnimationsModule,
     StoreModule.forRoot({ product: addProductReducer }),
-
     StoreModule.forFeature('auth', reducer)
   ],
-  providers: [AuthGuard, LoggedInAuthGuard],
+  providers: [AuthGuard, LoggedInAuthGuard,
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

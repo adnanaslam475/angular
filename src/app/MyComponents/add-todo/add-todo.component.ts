@@ -1,10 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Todo } from 'src/app/Todo';
 
 @Component({
   selector: 'app-add-todo',
   templateUrl: './add-todo.component.html',
-  styleUrls: ['./add-todo.component.scss']
+  styleUrls: ['./add-todo.component.scss'],
+  // providers: [],
+  
 })
 
 export class AddTodoComponent implements OnInit {

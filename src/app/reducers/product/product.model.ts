@@ -1,4 +1,7 @@
 export interface Product {
-    name: string;
     price: number;
+    title: string;
+    description: string;
+    active: boolean;
+    images: []
 }
