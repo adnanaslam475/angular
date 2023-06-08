@@ -1,28 +1,13 @@
 <div>
-  <form class="example-form">
+  <form (ngSubmit)="onSubmit()" class="example-form">
     <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile>
-        <mat-form-field class="example-full-width"
-          ><mat-label>Title</mat-label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            matInput
-            [(ngModel)]="product.title"
-            #title
-            placeholder="Ex. pat@example.com"
-          />
-          <mat-error
-            *ngIf="
-              emailFormControl.hasError('email') &&
-              !emailFormControl.hasError('required')
-            "
-          >
-            Please enter a valid title
-          </mat-error>
-        </mat-form-field></mat-grid-tile
+      <app-titleinput
+        [titlez]="product.title"
+        (sendTitletoParent)="onCatch($event)"
       >
+        <!-- <h1 first>first</h1>
+        <h1 second>second</h1> -->
+      </app-titleinput>
       <mat-grid-tile>
         <mat-form-field class="example-full-width">
           <input
@@ -66,9 +51,42 @@
         </mat-form-field>
       </mat-grid-tile>
     </mat-grid-list>
-    <input (change)="imageUpload($event)" multiple type="file" />
-    <mat-grid-tile *ngFor="let v of product.images">
-      <img src="{{ v }}" class="" alt="" />
-    </mat-grid-tile>
+    <ngx-dropzone
+      accept="image/jpeg,image/jpg,image/png"
+      (change)="onSelect($event)"
+      [multiple]="true"
+      class=""
+      [disableClick]="imageUploading"
+    >
+      <ngx-dropzone-label>Drop Product images</ngx-dropzone-label>
+      <ngx-dropzone-preview
+        *ngFor="let image of images"
+        [removable]="true"
+        (removed)="onRemove(image)"
+      >
+        <ngx-dropzone-label
+          >{{ image.name }} ({{ image.type }})</ngx-dropzone-label
+        >
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
+    <div style="display: flex">
+      <ngx-dropzone-image-preview
+        ngProjectAs="ngx-dropzone-preview"
+        *ngFor="let image of images"
+        [file]="image"
+      />
+    </div>
+    <button
+      style="border: none"
+      class="submit_btn"
+      type="submit"
+      [disabled]="isSubmitting"
+      mat-flat-button
+      color="primary"
+    >
+      Primary
+    </button>
   </form>
+
+  <app-add-product-form></app-add-product-form>
 </div>

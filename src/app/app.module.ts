@@ -1,19 +1,19 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+// import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodosComponent } from './MyComponents/todos/todos.component';
 import { TodoItemComponent } from './MyComponents/todo-item/todo-item.component';
-import { AddTodoComponent } from './MyComponents/add-todo/add-todo.component';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { SignupComponent } from './MyComponents/signup/signup.component';
 import { LoginComponent } from './MyComponents/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { reducer } from './reducers/reducers';
+// import { reducer,metaRecuerss } from './reducers/reducers';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,11 +26,13 @@ import { ProductsComponent } from './MyComponents/products/products.component';
 import { AddProductComponent } from './MyComponents/add-product/add-product.component';
 import {
   AngularFireStorageModule,
-  AngularFireStorageReference,
-  AngularFireUploadTask,
 } from "@angular/fire/compat/storage";
-import { getStorage, provideStorage, Storage, StorageModule } from '@angular/fire/storage';
-import { ErrorStateMatcher, MatLine, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { AddProductFormComponent } from './MyComponents/add-product-form/add-product-form.component';
+import { TitleInputComponent } from './MyComponents/titleinput/titleinput.component';
+import { reducers, metaReducers } from './store';
 export const environment = {
   production: false,
   firebase: {
@@ -49,25 +51,26 @@ export const environment = {
     AppComponent,
     TodosComponent,
     TodoItemComponent,
-    AddTodoComponent,
     SignupComponent,
     LoginComponent,
     ProductsComponent,
     AddProductComponent,
+    AddProductFormComponent,
+    TitleInputComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase, "cloud"),
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule, NgxDropzoneModule,
     MatSlideToggleModule, AngularFireStorageModule,
     MatInputModule, MatButtonModule,
     MatButtonToggleModule,
     FormsModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ product: addProductReducer }),
-    StoreModule.forFeature('auth', reducer)
+    // StoreModule.forRoot({ product: addProductReducer }),
+    StoreModule.forRoot(reducers, { metaReducers }), StoreDevtoolsModule.instrument(),
   ],
   providers: [AuthGuard, LoggedInAuthGuard,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }

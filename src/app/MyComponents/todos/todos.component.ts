@@ -5,38 +5,37 @@ import { Todo } from 'src/app/Todo';
 @Component({
   selector: 'app-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
 })
 
 export class TodosComponent implements OnInit {
   todos: Todo[] = [];
   products: any[] = [];
 
-  constructor(private todoServices: TasksService) {
-
-  }
+  constructor(private todoServices: TasksService) { }
 
   ngOnInit(): void {
-    this.todoServices.getTodos().subscribe(todos => {
-      console.log('todos', todos)
-      this.todos = todos
+    this.todoServices.getTodos().subscribe((todos) => {
+      console.log('todos', todos);
+      this.todos = todos;
     });
   }
 
   deleteTodo(todo: Todo) {
-    console.log('todo', todo)
-    this.todoServices.deleteTod(todo).subscribe(() => {
-      this.todos = this.todos.filter(v => v.sno !== todo.sno)
-    }, e => { console.log('errrrrrrr', e) });
+    console.log('todo', todo);
+    this.todoServices.deleteTod(todo).subscribe(
+      () => {
+        this.todos = this.todos.filter((v) => v.sno !== todo.sno);
+      },
+      (e) => {
+        console.log('errrrrrrr', e);
+      }
+    );
   }
-
 
   checkedTodo(todo: Todo) {
-    this.todoServices.updateTodo(todo).subscribe((t) => {
-      // this.todos = this.todos.filter(v => v.sno !== t.sno)
-    });
+    this.todoServices.updateTodo(todo).subscribe((t) => { });
   }
-
 
   addTask(todo: Todo) {
     this.todoServices.addTask(todo).subscribe((todo) => this.todos.push(todo));

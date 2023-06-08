@@ -2,10 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Todo } from 'src/app/Todo';
 import { Product } from '../../reducers/product/product.model';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers/app.state';
+// import { AppState } from 'src/app/reducers/app.state';
+
 import { Observable } from 'rxjs';
 import { ADD_PRODUCT } from 'src/app/reducers/product.reducers';
-import { take, isEmpty, exhaustMap } from 'rxjs/operators';
+import { IAppState } from 'src/app/store/app.interface';
+// import { take, isEmpty, exhaustMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-item',
@@ -16,12 +18,11 @@ import { take, isEmpty, exhaustMap } from 'rxjs/operators';
 export class TodoItemComponent implements OnInit {
   @Input() todo: Todo;
   products: Observable<Product[]>;
-
   @Output() todoDelete: EventEmitter<Todo> = new EventEmitter();
   @Output() todoChecked: EventEmitter<Todo> = new EventEmitter();
 
-  constructor(private store: Store<AppState>) {
-    this.products = this.store.select((state) => state.product);
+  constructor(private store: Store<IAppState>) {
+    // this.products = this.store.select((state) => state.product);
     // this.products
   }
 

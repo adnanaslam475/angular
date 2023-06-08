@@ -15,6 +15,6 @@ export const mainReducer: AuthModuleState = {
 const combineReducer = combineReducers(mainReducer)
 
 
-export function reducer(state: any, action: any) {
-    return combineReducer(state, action);
-}
+// export function reducer(state: any, action: any) {
+//     return combineReducer(state, action);
+// }

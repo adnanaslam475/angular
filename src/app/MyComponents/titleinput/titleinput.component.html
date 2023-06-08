@@ -1,0 +1,17 @@
+<mat-grid-tile>
+  <ng-content select="[first]"></ng-content>
+  <mat-form-field class="example-full-width">
+    <mat-label>Title</mat-label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      matInput
+      [(ngModel)]="title"
+      (focusout)="onFocusOut()"
+      placeholder="Ex. pat@example.com"
+    />
+    <mat-error> Please enter a valid title </mat-error>
+  </mat-form-field>
+  <ng-content select="[second]"></ng-content>
+</mat-grid-tile>

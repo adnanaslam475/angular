@@ -23,29 +23,26 @@ export class LoginComponent {
   private userSubject: BehaviorSubject<User | null>;
   public user: Observable<User | null>;
 
-
   constructor(private http: HttpClient, public router: Router,) {
     this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
     this.user = this.userSubject.asObservable();
   }
 
   public get userValue() {
-    console.log('this----------', this.userSubject.value)
     return this.userSubject.value;
   }
+
   ngOnInit() {
     if (this.userValue?.token) {
       this.router.navigate(['/']);
     }
   }
-  // configUrl = 'https://policyfetch.herokuapp.com/car';
   configUrl = 'http://localhost:5000/users/login';
 
   getConfig() {
     return this.http.get<any>(this.configUrl);
   }
   logout() {
-    console.log('ssslogoutssssss')
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
     this.userSubject.next(null);
@@ -53,16 +50,13 @@ export class LoginComponent {
   }
 
   generalErrorHandler(error: any, caught: Observable<any>): Observable<any> {
-    console.log('error caught:-------> ', error);
     if (error.error.status == "INVALID_TOKEN" || error.error.status == "MAX_TOKEN_ISSUE_REACHED") {
-      console.log('token has expired');
       return error;
     }
     return error;
   }
 
   onLoginSubmit(body: Login) {
-    console.log('onLoginSubmit----->', body)
     this.isLoading = true;
     return this.http.post<Login>(this.configUrl, body, {
       headers: new HttpHeaders({
@@ -72,14 +66,12 @@ export class LoginComponent {
       .subscribe({
         next: (a) => {
           this.isLoading = false;
-          console.log('next', a, this.userValue?.token)
           localStorage.setItem('user', JSON.stringify(a));
           this.userSubject.next(a as any);
           this.router.navigate(['/'])
         },
         error: (e: any) => {
           this.isLoading = false;
-          console.log('errr', e)
         }
       });
   }
