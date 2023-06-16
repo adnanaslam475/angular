@@ -1,10 +1,7 @@
 import { createSelector } from "@ngrx/store";
 
 export interface IApp {
-  // username: string;
-  // password: string;
-  // authenticationMessage: string;
-  products:[]
+  products: []
 }
 
 export interface IAppState {
@@ -12,7 +9,7 @@ export interface IAppState {
 }
 
 export const initialAppState: IApp = {
-  products:[]
+  products: []
 };
 
 export const selectFeature = (state: IAppState) => state.AppState;

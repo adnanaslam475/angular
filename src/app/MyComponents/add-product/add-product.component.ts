@@ -12,9 +12,9 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize, } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { IAppState } from 'src/app/store/app.interface';
-import { login } from 'src/app/store/actions/app.actions';
+import { invokeSaveNewProductAPI, login } from 'src/app/store/actions/app.actions';
 
 @Component({
   selector: 'app-add-product',
@@ -22,13 +22,14 @@ import { login } from 'src/app/store/actions/app.actions';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit {
+  images: File[] = [];
   product: Product = {
     title: 'aaaa',
     description: '',
     price: 0,
     active: false,
+    images: this.images
   };
-  images: File[] = [];
   urls: any[] = [];
   imageUploading = false
   isSubmitting = false
@@ -55,20 +56,17 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('ngOnInit',)
+    console.log('pro',
+     window,
+      // (window as any).process = { env: { DEBUG: undefined }, }
+      )
   }
 
   async onSubmit() {
-    const finl: any = { ...this.product, images: this.images };
-    console.log('onSubmit')
-    try {
-      this.productAdd.emit(finl);
-      // const res = await this.http.post('http://localhost:5000/product', finl, { headers: { 'content-type': 'application/json' } })
-      this.store.dispatch(login(finl));
-      this.router.navigate(['/'])
-    } catch (error) {
-      console.log('onSubmit_e')
-    }
+    const p: Product = { ...this.product, images: this.images };
+    this.store.dispatch(invokeSaveNewProductAPI({ product: p }));
+    // this.productAdd.emit(finl);
+    // this.router.navigate(['/'])
   }
 
   onRemove(event: File) {

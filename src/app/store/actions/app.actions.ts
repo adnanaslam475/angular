@@ -6,6 +6,25 @@ export const login = createAction(
     props<Product>()
 );
 
+export const getProducts = createAction(
+    '[productModule] Action',
+    props
+);
+
+export const invokeSaveNewProductAPI = createAction(
+    '[productModule] Add Action',
+    props<{ product: Product }>()
+);
+
+export const productsFetchAPISuccess = createAction('[productModule API] Fetch API Success',
+    props<{ products: Product[] | any }>()
+);
+
+export const addNewProductAPISucess = createAction(
+    '[Books API] save new book api success',
+    props<{ product: Product }>()
+);
+
 export const loginSuccess = createAction(
     '[loginModule] log user Success Action'
 );

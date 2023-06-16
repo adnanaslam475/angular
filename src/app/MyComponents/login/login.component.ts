@@ -33,9 +33,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    if (this.userValue?.token) {
-      this.router.navigate(['/']);
-    }
+
   }
   configUrl = 'http://localhost:5000/users/login';
 
@@ -66,6 +64,7 @@ export class LoginComponent {
       .subscribe({
         next: (a) => {
           this.isLoading = false;
+          console.log('JSON.stringify(a)', JSON.stringify(a))
           localStorage.setItem('user', JSON.stringify(a));
           this.userSubject.next(a as any);
           this.router.navigate(['/'])

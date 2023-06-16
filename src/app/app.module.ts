@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { SignupComponent } from './MyComponents/signup/signup.component';
 import { LoginComponent } from './MyComponents/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { reducer,metaRecuerss } from './reducers/reducers';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
@@ -27,12 +27,17 @@ import { AddProductComponent } from './MyComponents/add-product/add-product.comp
 import {
   AngularFireStorageModule,
 } from "@angular/fire/compat/storage";
+import { AuthInterceptor } from './http-interceptors/auth-interceptor';
+
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { AddProductFormComponent } from './MyComponents/add-product-form/add-product-form.component';
 import { TitleInputComponent } from './MyComponents/titleinput/titleinput.component';
 import { reducers, metaReducers } from './store';
+import { MainEffects } from './store/effects/main-store-effects';
+// import { MainEffects } from "./store/effects/main-store-effects.ts";
 export const environment = {
   production: false,
   firebase: {
@@ -63,6 +68,8 @@ export const environment = {
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase, "cloud"),
     AppRoutingModule,
+    EffectsModule.forFeature(MainEffects),
+    EffectsModule.forRoot([]),
     HttpClientModule, NgxDropzoneModule,
     MatSlideToggleModule, AngularFireStorageModule,
     MatInputModule, MatButtonModule,
@@ -72,8 +79,19 @@ export const environment = {
     // StoreModule.forRoot({ product: addProductReducer }),
     StoreModule.forRoot(reducers, { metaReducers }), StoreDevtoolsModule.instrument(),
   ],
-  providers: [AuthGuard, LoggedInAuthGuard,
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: ErrorStateMatcher,
+      useClass: ShowOnDirtyErrorStateMatcher,
+      
+    },
+    AuthGuard,
+    LoggedInAuthGuard,
   ],
   bootstrap: [AppComponent],
 })
